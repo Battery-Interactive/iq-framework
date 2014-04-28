@@ -1,0 +1,9 @@
+language: node_js
+node_js:
+  - '0.10'
+branches:
+  only:
+    - master
+script: ./run-tests.sh
+after_script:
+  - git clone https://github.com/Battery-Interactive/iq-framework
