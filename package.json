@@ -2,10 +2,10 @@
   "name": "iq-framework",
   "description": "Official IQ Framework by Battery Interactive",
   "author": "Brian Holden",
-  "version": "0.0.3",
+  "version": "0.4.0",
   "repository": {
     "type": "git",
-    "url": "git://github.com/Battery-Interactive/iq-framework#master"
+    "url": "git://github.com/Battery-Interactive/iq-framework"
   },
   "devDependencies": {
     "node-sass": "~0.7.0",
