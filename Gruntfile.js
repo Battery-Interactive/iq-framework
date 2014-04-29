@@ -1,6 +1,35 @@
 module.exports = function(grunt) {
   grunt.initConfig({
     pkg: grunt.file.readJSON('package.json'),
+    rsync: {
+      options: {
+          args: ["--verbose"],
+          exclude: [".git*","*.scss","node_modules"],
+          recursive: true
+      },
+      dist: {
+          options: {
+              src: "./src",
+              dest: "./dist"
+          }
+      },
+      stage: {
+          options: {
+              src: "../dist/",
+              dest: "/var/www/site",
+              host: "user@staging-host",
+              syncDestIgnoreExcl: true
+          }
+      },
+      prod: {
+          options: {
+              src: "../dist/",
+              dest: "/var/www/site",
+              host: "user@live-host",
+              syncDestIgnoreExcl: true
+          }
+      }
+  }
     uglify: {
       js: {
         options: {
@@ -28,7 +57,16 @@ module.exports = function(grunt) {
       }
     }
   });
+  grunt.loadNpmTasks('grunt-rsync');
   grunt.loadNpmTasks('grunt-contrib-uglify');
+  grunt.loadNpmTasks('grunt-contrib-clean');
+  grunt.loadNpmTasks('grunt-contrib-concat');
+  grunt.loadNpmTasks('grunt-contrib-copy');
+  grunt.loadNpmTasks('grunt-contrib-watch');
+  grunt.loadNpmTasks('grunt-newer');
+  grunt.loadNpmTasks('grunt-sass');
+  grunt.registerTask('develop', ['build', 'rsync:dist']);
+  grunt.registerTask('deploy', ['build', 'rsync:dist']);
   grunt.registerTask('build', ['uglify']);
   grunt.registerTask('default', ['build']);
 }
